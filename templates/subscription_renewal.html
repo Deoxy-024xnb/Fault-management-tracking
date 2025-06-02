@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Renewal - WinVinaya Infosystems</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="navbar">
+                <div class="header-content">
+                    <div class="logo">
+                        <a href="https://www.winvinaya.com/" target="_blank" style="text-decoration: none; color: inherit;">
+                            <img src="https://www.winvinaya.com/assets/WVIS.png" alt="Logo" style="height: 40px;">
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <h1>Subscription Renewal</h1>
+            <p class="subtitle">Log your software subscription renewal details</p>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="alert alert-error">
+                  {% for message in messages %}
+                    <p><i class="fas fa-exclamation-circle"></i> {{ message }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+            <div class="form-container">
+                <form method="POST" class="form-card">
+                    <div class="form-group">
+                        <label for="user_name">
+                            <i class="fas fa-user"></i>
+                            Name
+                        </label>
+                        <input type="text" 
+                               id="user_name" 
+                               name="user_name" 
+                               required 
+                               placeholder="Enter your name"
+                               value="{{ user_name|default('') }}">
+                        <small class="form-help">Please enter your full name as registered</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="software_name">
+                            <i class="fas fa-cube"></i>
+                            Software Name
+                        </label>
+                        <input type="text" 
+                               id="software_name" 
+                               name="software_name" 
+                               required 
+                               placeholder="Enter software name"
+                               value="{{ software_name|default('') }}">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-group-half">
+                            <label for="country_code">
+                                <i class="fas fa-globe"></i>
+                                Country Code
+                            </label>
+                            <select name="country_code" id="country_code" required>
+                                <option value="">Select your country</option>
+                                {% for country in country_options %}
+                                <option value="{{ country.code }}">{{ country.name }} ({{ country.code }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group form-group-half">
+                            <label for="phone_number">
+                                <i class="fas fa-phone"></i>
+                                Phone Number
+                            </label>
+                            <input type="tel" 
+                                   id="phone_number" 
+                                   name="phone_number" 
+                                   required 
+                                   placeholder="Enter number without country code"
+                                   value="{{ phone_number|default('') }}">
+                            <small class="form-help">We'll use this to contact you about the subscription</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expiry_date">
+                            <i class="fas fa-calendar-alt"></i>
+                            Expiry Date
+                        </label>
+                        <input type="date" 
+                               id="expiry_date" 
+                               name="expiry_date" 
+                               required
+                               value="{{ expiry_date|default('') }}">
+                        <small class="form-help">Select the date when the subscription expires</small>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="button">
+                            <i class="fas fa-save"></i>
+                            Log Renewal
+                        </button>
+                        <a href="{{ url_for('index') }}" class="button button-secondary">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Home
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 WinVinaya Infosystems. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

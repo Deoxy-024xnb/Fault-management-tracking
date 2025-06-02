@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Management Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <nav class="navbar">
+                <div class="header-content">
+                    <div class="logo">
+                        <a href="https://www.winvinaya.com/" target="_blank" style="text-decoration: none; color: inherit;">
+                            <img src="https://www.winvinaya.com/assets/WVIS.png" alt="Logo" style="height: 40px;">
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <h1>Device Fault & Subscription Tracker</h1>
+            <p class="subtitle">Manage your device reports and subscriptions efficiently</p>
+            <p class="subtitle">What would you like to report today?</p>
+            <div class="card-container">
+                <div class="card">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h2>Device Fault Report</h2>
+                    <p>Submit and track device issues</p>
+                    <a href="{{ url_for('fault_report') }}" class="button">
+                        Submit Report
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <i class="fas fa-sync"></i>
+                    <h2>Subscription Renewal</h2>
+                    <p>Manage device subscriptions</p>
+                    <a href="{{ url_for('subscription_renewal') }}" class="button">
+                        Manage Subscription
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 WinVinaya Infosystems. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
