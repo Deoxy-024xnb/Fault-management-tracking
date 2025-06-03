@@ -11,3 +11,7 @@ twilio==9.6.1
 requests==2.32.3
 
 python-dotenv==1.1.0
+
+phonenumbers==8.13.33
+schedule==1.2.1
+
