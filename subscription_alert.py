@@ -33,9 +33,9 @@ sheet = client.open_by_key(spreadsheet_id)
 subscription_sheet = sheet.worksheet("Renewals")
 
 # Twilio configuration
-account_sid = 'AC654714ee003ae41c011f0432c7387529'
-auth_token = '4b5004b782570f60b1a6c9bd091bf4c5'
-twilio_phone_number = '+1 903 296 3671'
+account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+twilio_phone_number = '+16184238246'
 
 twilio_client = Client(account_sid, auth_token)
 
@@ -44,12 +44,11 @@ def update_days_left():
     all_rows = subscription_sheet.get_all_values()
     today = datetime.now().date()
     
-    # Start from row 2 to skip header
     for i, row in enumerate(all_rows[1:], start=2):
         try:
-            expiry_date = datetime.strptime(row[2], '%Y-%m-%d').date()  # Expiry date is in column 3
+            expiry_date = datetime.strptime(row[2], '%Y-%m-%d').date()  
             days_left = (expiry_date - today).days
-            subscription_sheet.update_cell(i, 4, str(days_left))  # Update days left in column 4
+            subscription_sheet.update_cell(i, 4, str(days_left))  
         except (ValueError, IndexError):
             print(f"Error processing row {i}: {row}")
             continue
@@ -63,8 +62,8 @@ def send_renewal_alerts():
         try:
             user_name = row[0]
             software_name = row[1]
-            days_left = int(row[3])  # Days left is in column 4
-            phone_number = row[4]     # Phone number is in column 5
+            days_left = int(row[3])  
+            phone_number = row[4]     
             
             if days_left <= 10 and days_left >= 0:
                 message = (

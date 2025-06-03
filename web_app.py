@@ -48,10 +48,10 @@ def validate_phone(country_code, number):
 
 def update_days_since_reported():
     all_rows = fault_sheet.get_all_values()
-    # header is row 1, data start at row 2
+    
     for i, row in enumerate(all_rows[1:], start=2):
-        fault_date_str = row[0]  # Date in first column
-        fault_checked = row[3].strip().lower() if len(row) > 3 else 'no'  # Fault Checked in 4th column now
+        fault_date_str = row[0]  
+        fault_checked = row[3].strip().lower() if len(row) > 3 else 'no'  
         days_since = '-'
 
         if fault_checked != 'yes':
@@ -59,9 +59,8 @@ def update_days_since_reported():
                 fault_date = datetime.strptime(fault_date_str, '%Y-%m-%d')
                 days_since = (datetime.now() - fault_date).days
             except Exception:
-                days_since = '0'  # default if date parse fails
+                days_since = '0'  
 
-        # Update the last column (Days Since Fault Reported)
         if len(row) < 6:
             fault_sheet.update_cell(i, 6, str(days_since))
         else:
@@ -104,15 +103,14 @@ def fault_report():
             return render_template('fault_report.html', country_options=country_options)
 
         all_rows = fault_sheet.get_all_values()
-        for row in all_rows[1:]:  # Skip header
+        for row in all_rows[1:]:  
             if len(row) >= 3 and row[1].strip().lower() == name.lower() and row[2].strip().lower() == fault_desc.lower():
                 flash("You've already raised a complaint. A technician will reach out to you soon.")
                 return render_template('fault_report.html', country_options=country_options)
             
-        fault_checked = 'No'  # Default value
+        fault_checked = 'No'  
         today_date = datetime.now().strftime('%Y-%m-%d')
 
-        # Append row: [Date, Device ID, Fault Description, Fault Checked, Phone Number, Days Since Fault Reported]
         fault_sheet.append_row([today_date, name, fault_desc, fault_checked, country_code + phone_number, '0'])
         update_days_since_reported()
         return redirect(url_for('index'))
@@ -149,15 +147,13 @@ def subscription_renewal():
         if not user_name:
             flash("Please enter your name")
             return render_template('subscription_renewal.html', country_options=country_options)
-        
-        # Validate phone number
+
         if not validate_phone(country_code, phone_number):
             flash("Invalid phone number for selected country code. Please enter a valid number.")
             return render_template('subscription_renewal.html', country_options=country_options)
 
-        # Check for duplicates
         all_rows = subscription_sheet.get_all_values()
-        for row in all_rows[1:]:  # Skip header
+        for row in all_rows[1:]:
             if len(row) >= 2 and row[0].strip().lower() == user_name.lower() and row[1].strip().lower() == software_name.lower():
                 flash("You have already submitted this software subscription. Please check again.")
                 return render_template('subscription_renewal.html', country_options=country_options)
@@ -165,7 +161,6 @@ def subscription_renewal():
         today = datetime.now().date()
         days_left = (datetime.strptime(expiry_date, '%Y-%m-%d').date() - today).days
         
-        # Append row with user name and phone number
         subscription_sheet.append_row([
             user_name, 
             software_name, 
@@ -180,3 +175,4 @@ def subscription_renewal():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))

@@ -36,12 +36,12 @@ client = gspread.authorize(creds)
 SPREADSHEET_KEY = "1UO_Gfv5JseIV7DYWficr4kY85j5WJ826HU6yjv5D2xQ"
 log_sheet = client.open_by_key(SPREADSHEET_KEY).worksheet("Faults")
 
-TWILIO_SID = "AC654714ee003ae41c011f0432c7387529"
-TWILIO_AUTH_TOKEN = "4b5004b782570f60b1a6c9bd091bf4c5"
-TWILIO_PHONE = "+1 903 296 3671"
-TECH_PHONE = "+918754613017"
+account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+TWILIO_PHONE = "+16184238246"
+TECH_PHONE = "+91xxxxxx3017"
 
-client_twilio = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
+client_twilio = Client(account_sid, auth_token)
 
 def get_laptop_status_rows():
     values = log_sheet.get_all_values()
