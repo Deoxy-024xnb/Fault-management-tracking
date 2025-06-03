@@ -36,8 +36,8 @@ client = gspread.authorize(creds)
 SPREADSHEET_KEY = "1UO_Gfv5JseIV7DYWficr4kY85j5WJ826HU6yjv5D2xQ"
 log_sheet = client.open_by_key(SPREADSHEET_KEY).worksheet("Faults")
 
-account_sid = os.getenv("TWILIO_ACCOUNT_SID")
-auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+account_sid = os.getenv("ACCOUNT_SID")
+auth_token = os.getenv("AUTH_TOKEN")
 TWILIO_PHONE = "+16184238246"
 TECH_PHONE = "+91xxxxxx3017"
 

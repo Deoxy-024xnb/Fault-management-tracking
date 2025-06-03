@@ -33,8 +33,8 @@ sheet = client.open_by_key(spreadsheet_id)
 subscription_sheet = sheet.worksheet("Renewals")
 
 # Twilio configuration
-account_sid = os.getenv("TWILIO_ACCOUNT_SID")
-auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+account_sid = os.getenv("ACCOUNT_SID")
+auth_token = os.getenv("AUTH_TOKEN")
 twilio_phone_number = '+16184238246'
 
 twilio_client = Client(account_sid, auth_token)
